@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Test</title>
+    <style>
+      #code-snippet {
+        font-family: 'Courier New', Courier, monospace;
+        white-space: pre;
+        /* background-color: #e11e1e; */
+        /* width: 100px;
+        height: 100px; */
+        overflow: auto;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="code-snippet">999</div>
+
+    <script src="./Javascript Code Snippet.js"></script>
+    <script>
+      const codeSnippet = document.getElementById('code-snippet');
+      createAnimation({
+        from: 0,
+        to: 10,
+        duration: 15,
+        totalDuration: 5000,
+        onChange: value => {
+          codeSnippet.textContent = value.toFixed(2);
+        },
+      });
+    </script>
+  </body>
+</html>

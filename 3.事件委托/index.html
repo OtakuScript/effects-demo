@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Delegation</title>
+</head>
+<body>
+  <div class="container"></div>
+
+  <script>
+    const container = document.querySelector('.container');
+
+    for (let i = 0; i < 100; i++) {
+      const button = document.createElement('button');
+      button.textContent = 'Button ' + i;
+      button.style.width = '60px';
+      button.style.marginRight = '5px';
+      container.appendChild(button);
+    }
+
+    container.addEventListener('click', function (event) {
+      // 技巧：使用 Array.prototype.slice.call 将类数组对象转换为数组
+      const children = Array.prototype.slice.call(container.children)
+      const index = children.indexOf(event.target);
+      if (event.target.tagName === 'BUTTON') {
+        console.log(event.target.textContent + '--' + index);
+      }
+    });
+  </script>
+</body>
+</html>

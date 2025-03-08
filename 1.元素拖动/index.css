@@ -1,0 +1,22 @@
+html {
+  overflow: -moz-hidden-unscrollable; /* Firefox */
+  overflow: hidden; /* 隐藏滚动条 */
+  height: 100%; /* 确保内容可滚动 */
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+.target {
+  /* position: fixed;
+  top: 50%;
+  left: 50%; */
+  width: 200px;
+  height: 200px;
+  background-color: #fbe961;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  cursor: move;
+  text-align: center;
+  line-height: 200px;
+}

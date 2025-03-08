@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debounce</title>
+</head>
+<body>
+  <div class="container">
+    <input type="text" id="input">
+    <button id="btn">click</button>
+  </div>
+
+  <script>
+    function debounce(fn, delay) {
+      let timer = null;
+      return function() {
+        if (timer) {
+          clearTimeout(timer);
+        }
+        const args = Array.prototype.slice.call(arguments, 0);
+        timer = setTimeout(() => {
+          fn.apply(
+            this, // 如果直接调用 fn()，this 指向 window，需要使用 apply 修改 this 指向
+            args
+          ); 
+        }, delay);
+      }
+    }
+
+    const input = document.getElementById('input');
+    const btn = document.getElementById('btn');
+
+    const inputHandler = debounce(function(e) {
+      console.log('input================================');
+      console.log('e', e);
+      console.log('this', this);
+      console.log('input================================');
+    }, 1000);
+    const btnHandler = debounce(function() {
+      console.log('click');
+    }, 1000);
+
+    input.addEventListener('input', debounce(inputHandler, 1000));
+    btn.addEventListener('click', debounce(btnHandler, 1000));
+  </script>
+</body>
+</html>
