@@ -58,7 +58,7 @@ init();
 let totalDuration = 500;
 let duration = 10;
 let isPlaying = false;
-function move(index) {
+function move(index, onToLast) {
   if (isPlaying || index === currentIndex) {
     return;
   }
@@ -71,6 +71,7 @@ function move(index) {
   };
   const onEnd = () => {
     isPlaying = false;
+    onToLast && onToLast();
   };
 
   createAnimation({
@@ -85,3 +86,52 @@ function move(index) {
   currentIndex = index;
   setindicatorStatus(index);
 }
+
+function toPre() {
+  let preIndex = currentIndex - 1;
+  if (preIndex < 0) {
+    let maxIndex = doms.carouselList.children.length - 1;
+    doms.carouselList.style.marginLeft =
+      -maxIndex * doms.carouselContainer.clientWidth + 'px';
+    preIndex = maxIndex - 1;
+  }
+  move(preIndex);
+}
+function toNext() {
+  let nextIndex = currentIndex + 1;
+  let onToLast;
+  if (nextIndex === doms.carouselList.children.length - 1) {
+    onToLast = () => {
+      doms.carouselList.style.marginLeft = 0;
+      currentIndex = 0;
+    };
+  }
+  move(nextIndex, onToLast);
+}
+
+doms.indicator.addEventListener('click', e => {
+  console.log(e.target);
+  if (e.target.tagName === 'DIV') {
+    move(parseInt(e.target.dataset.index));
+  }
+});
+doms.arrowLeft.addEventListener('click', toPre);
+doms.arrowRight.addEventListener('click', toNext);
+
+let carouselTimerId = null;
+function autoStart() {
+  if (carouselTimerId) {
+    return;
+  }
+  carouselTimerId = setInterval(() => {
+    toNext();
+  }, 2000);
+}
+function autoStop() {
+  clearInterval(carouselTimerId);
+  carouselTimerId = null;
+}
+
+autoStart();
+doms.carouselContainer.addEventListener('mouseenter', autoStop);
+doms.carouselContainer.addEventListener('mouseleave', autoStart);
