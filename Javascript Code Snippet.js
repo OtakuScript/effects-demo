@@ -114,3 +114,25 @@ function createAnimation(options) {
     }
   }, duration);
 }
+
+/**
+ * 防抖函数
+ * @param {function} fn 函数
+ * @param {number} delay 延迟时间(ms)
+ * @returns {function} 防抖函数
+ */
+function debounce(fn, delay) {
+  let timer = null;
+  return function () {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    const args = Array.prototype.slice.call(arguments, 0);
+    timer = setTimeout(() => {
+      fn.apply(
+        this, // 如果直接调用 fn()，this 指向 window，需要使用 apply 修改 this 指向
+        args
+      );
+    }, delay);
+  };
+}
