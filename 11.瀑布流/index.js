@@ -23,7 +23,8 @@ let waterfallList = [];
 function createWaterfallList() {
   // 修正拼写错误 createt -> create
   // Fisher-Yates 洗牌算法
-  const shuffleArray = arr => {
+  const shuffleArray = imgList => {
+    const arr = [...imgList];
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -33,33 +34,69 @@ function createWaterfallList() {
 
   // 创建4个随机排序的副本
   return [
-    ...shuffleArray([...imgList]),
-    ...shuffleArray([...imgList]),
-    ...shuffleArray([...imgList]),
-    ...shuffleArray([...imgList]),
+    ...shuffleArray(imgList),
+    ...shuffleArray(imgList),
+    ...shuffleArray(imgList),
+    ...shuffleArray(imgList),
   ];
+  // return shuffleArray(imgList);
 }
 waterfallList = createWaterfallList();
+console.log(imgList);
+console.log(waterfallList);
 
+const container = document.querySelector(".container");
 const imgWidth = 220;
-const container = document.querySelector('.container');
-function createImg(params) {
-  // 计算每行的图片数量
-  const perLineCount = Math.floor(container.offsetWidth / imgWidth);
-  // 创建img元素
-  waterfallList.forEach((item, index) => {
-    const img = document.createElement('img');
-    img.src = item;
-    img.style.width = imgWidth + 'px';
-    img.style.height = 'auto';
-    img.style.display = 'block';
-    img.style.cursor = 'pointer';
-    img.style.objectFit = 'cover';
-    container.appendChild(img);
-  });
+const columns = [];
+let gap = 1;
+
+function caculateColumn() {
+  const container = document.querySelector(".container");
+  const containerWidth = container.clientWidth;
+  const perRowCount = Math.floor(containerWidth / imgWidth);
+
+  for (let i = 0; i < perRowCount; i++) {
+    columns.push(0);
+  }
+
+  gap = (containerWidth - perRowCount * imgWidth) / perRowCount;
 }
 
-function init(params) {
+function setImgPosition(img) {
+  const imgHeight = img.clientHeight;
+  const minColumnIndex = columns.indexOf(Math.min.apply(null, columns));
+
+  let left;
+  let top;
+
+  if (minColumnIndex === 0) {
+    left = imgWidth + gap;
+  } else {
+    left = (imgWidth + gap) * minColumnIndex + gap;
+  }
+  top = columns[minColumnIndex] + gap;
+  columns[minColumnIndex] += top;
+  img.style.position = "absolute";
+  img.style.left = left + "px";
+  img.style.top = top + "px";
+}
+
+function createImg() {
+  // 创建img元素
+  for (let i = 0; i < waterfallList.length; i++) {
+    const img = document.createElement("img");
+    img.src = waterfallList[i];
+    img.style.width = imgWidth + "px";
+    container.appendChild(img);
+    img.onload = function () {
+      console.log("图片加载完成");
+    };
+  }
+}
+
+function init() {
+  // 计算每行的图片数量
+  caculateColumn();
   createImg();
 }
 
