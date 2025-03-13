@@ -1,23 +1,23 @@
 const imgList = [
-  "./images/佐藤美和子.jpg",
-  "./images/兰.jpg",
-  "./images/博士.jpg",
-  "./images/基安蒂.jpg",
-  "./images/妃英理.jpg",
-  "./images/安室透.jpeg",
-  "./images/工藤优作.jpg",
-  "./images/工藤有希子.jpg",
-  "./images/怪盗基德.jpg",
-  "./images/服部平次.jpg",
-  "./images/柯南.jpg",
-  "./images/步美.jpg",
-  "./images/毛利小五郎.jpg",
-  "./images/灰原哀.jpg",
-  "./images/目暮十三.jpg",
-  "./images/贝尔摩德.jpg",
-  "./images/赤井秀一.jpg",
-  "./images/远山和叶.jpg",
-  "./images/铃木园子.jpg",
+  './images/佐藤美和子.jpg',
+  './images/兰.jpg',
+  './images/博士.jpg',
+  './images/基安蒂.jpg',
+  './images/妃英理.jpg',
+  './images/安室透.jpeg',
+  './images/工藤优作.jpg',
+  './images/工藤有希子.jpg',
+  './images/怪盗基德.jpg',
+  './images/服部平次.jpg',
+  './images/柯南.jpg',
+  './images/步美.jpg',
+  './images/毛利小五郎.jpg',
+  './images/灰原哀.jpg',
+  './images/目暮十三.jpg',
+  './images/贝尔摩德.jpg',
+  './images/赤井秀一.jpg',
+  './images/远山和叶.jpg',
+  './images/铃木园子.jpg',
 ];
 let waterfallList = [];
 function createWaterfallList() {
@@ -41,4 +41,26 @@ function createWaterfallList() {
 }
 waterfallList = createWaterfallList();
 
-// test1
+const imgWidth = 220;
+const container = document.querySelector('.container');
+function createImg(params) {
+  // 计算每行的图片数量
+  const perLineCount = Math.floor(container.offsetWidth / imgWidth);
+  // 创建img元素
+  waterfallList.forEach((item, index) => {
+    const img = document.createElement('img');
+    img.src = item;
+    img.style.width = imgWidth + 'px';
+    img.style.height = 'auto';
+    img.style.display = 'block';
+    img.style.cursor = 'pointer';
+    img.style.objectFit = 'cover';
+    container.appendChild(img);
+  });
+}
+
+function init(params) {
+  createImg();
+}
+
+init();

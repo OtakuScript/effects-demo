@@ -1,4 +1,12 @@
 .container {
   position: relative;
+  margin: auto;
   width: 90%;
+  border: lawngreen solid 2px;
+  border-radius: 16px;
+  padding: 5px;
+}
+
+.container img {
+  position: absolute;
 }
