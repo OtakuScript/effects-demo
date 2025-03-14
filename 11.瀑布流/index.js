@@ -42,62 +42,56 @@ function createWaterfallList() {
   // return shuffleArray(imgList);
 }
 waterfallList = createWaterfallList();
-console.log(imgList);
-console.log(waterfallList);
 
-const container = document.querySelector(".container");
+const container = document.querySelector('.container');
 const imgWidth = 220;
-const columns = [];
-let gap = 1;
+const imagesList = [];
 
 function caculateColumn() {
-  const container = document.querySelector(".container");
+  const container = document.querySelector('.container');
   const containerWidth = container.clientWidth;
-  const perRowCount = Math.floor(containerWidth / imgWidth);
+  const columns = Math.floor(containerWidth / imgWidth);
+  const gap = (containerWidth - columns * imgWidth) / (columns + 1);
 
-  for (let i = 0; i < perRowCount; i++) {
-    columns.push(0);
-  }
-
-  gap = (containerWidth - perRowCount * imgWidth) / perRowCount;
+  return (info = {
+    columns,
+    gap,
+  });
 }
 
-function setImgPosition(img) {
-  const imgHeight = img.clientHeight;
-  const minColumnIndex = columns.indexOf(Math.min.apply(null, columns));
+function setImgPosition() {
+  // 计算每行的图片数量
+  const info = caculateColumn();
+  const arr = new Array(info.columns).fill(0);
+  for (let i = 0; i < imagesList.length; i++) {
+    const img = imagesList[i];
+    const minTop = Math.min.apply(null, arr);
+    const minIndex = arr.indexOf(minTop);
+    const left = (minIndex + 1) * info.gap + minIndex * imgWidth;
+    const maTop = Math.max.apply(null, arr);
 
-  let left;
-  let top;
-
-  if (minColumnIndex === 0) {
-    left = imgWidth + gap;
-  } else {
-    left = (imgWidth + gap) * minColumnIndex + gap;
+    img.style.top = minTop + info.gap + 'px';
+    img.style.left = left + 'px';
+    container.style.height = maTop + info.gap + 'px';
+    arr[minIndex] += img.offsetHeight + info.gap;
   }
-  top = columns[minColumnIndex] + gap;
-  columns[minColumnIndex] += top;
-  img.style.position = "absolute";
-  img.style.left = left + "px";
-  img.style.top = top + "px";
 }
 
-function createImg() {
+function createImgs() {
   // 创建img元素
   for (let i = 0; i < waterfallList.length; i++) {
-    const img = document.createElement("img");
+    const img = document.createElement('img');
     img.src = waterfallList[i];
-    img.style.width = imgWidth + "px";
+    img.style.width = imgWidth + 'px';
+    imagesList.push(img);
+    img.onload = setImgPosition;
     container.appendChild(img);
-    img.onload = function () {
-      console.log("图片加载完成");
-    };
   }
 }
 
 function init() {
-  // 计算每行的图片数量
-  caculateColumn();
-  createImg();
+  createImgs();
+  window.onresize = debounce(setImgPosition, 300);
 }
 
 init();

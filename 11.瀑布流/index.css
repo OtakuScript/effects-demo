@@ -4,4 +4,11 @@
   width: 90%;
   border: lawngreen solid 2px;
   border-radius: 16px;
+  transition: all 0.5s ease-in-out;
+}
+
+.container img {
+  position: absolute;
+  border: 2px solid skyblue;
+  transition: all 0.5s ease-in-out;
 }
