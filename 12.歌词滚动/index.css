@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 20px;
+  background-color: pink;
+  color: black;
+  text-align: center;
+}
+
+audio {
+  width: 75%;
+}
+
+.lyric-box {
+  margin-top: 20px;
+  height: 420px;
+  overflow: hidden;
+  border: 2px aliceblue solid;
+  background-color: #f9f2bd;
+  padding: 10px;
+  border-radius:  10px;
+}
+
+ul {
+  display: block;
+  list-style: none;
+}
+
+li {
+  height: 30px;
+  line-height: 30px;
+  transition: .6s ease;
+}
+
+.active {
+  transform: scale(1.2);
+  color: blue;
+}
