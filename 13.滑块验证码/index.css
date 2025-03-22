@@ -19,7 +19,7 @@
   display: block;
   position: absolute;
   top: calc(50% - 13px);
-  left: 10%;
+  left: 15%;
   width: 26px;
   height: 26px;
   text-align: center;
@@ -28,7 +28,7 @@
 }
 
 .imgContainer {
-  height: 320px;
+  height: 280px;
   /* box-sizing: border-box; */
   padding: 15px;
   border: 1px solid #adadad;
@@ -43,7 +43,7 @@
 }
 
 .imgBox {
-  width: 320px;
+  width: 300px;
   height: 200px;
   background-repeat: no-repeat;
   position: relative;
@@ -54,8 +54,7 @@
   width: 50px;
   height: 50px;
   z-index: 10;
-  border: 1px solid #adadad;
-  /* opacity: 0; */
+  opacity: 0;
 }
 
 .imgGap {
@@ -99,5 +98,5 @@
 }
 
 .slider span {
-  transition: all 0.5;
+  transition: all 1s;
 }
